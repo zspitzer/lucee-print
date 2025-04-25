@@ -88,7 +88,7 @@
 
 	try {
 		printTag.onStartTag({
-			printer:"Canon TS3100 series",
+			printer:"#url.printer#",
 			source: sampleColorfile,
 			color: true
 		});
@@ -99,7 +99,7 @@
 	echo("<h2>Mono test</h2>");
 	try {
 		printTag.onStartTag({
-			printer:"Canon TS3100 series",
+			printer:"#url.printer#",
 			source: sampleMonofile,
 			color: false
 		});
