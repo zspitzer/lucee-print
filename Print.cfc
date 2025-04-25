@@ -1,6 +1,4 @@
-component {
-	// variables.instance.proxyHelper = createObject('component','lucee.core.ajax.AjaxProxyHelper').init();
-	// variables.instance.ajaxBinder = createObject('component','lucee.core.ajax.AjaxBinder').init();
+component name="lucee print tag" {
 	// Meta data
 	this.metadata.hint = "Allows printing a document to a printer.";
 	this.metadata.attributetype = "fixed";
@@ -26,19 +24,19 @@ component {
 		"copies": {
 			required: false,
 			type: "numeric",
-			default: "1",
+			default: 1,
 			hint: "Number of copies to print"
 		},
 		"color": {
 			required:false,
 			type: "boolean",
-			default: "false",
+			default: false,
 			hint: "Print in color or monochrome."
 		},
 		"fidelity": {
 			required: false,
 			type: "boolean",
-			default: "true",
+			default: true,
 			hint: "Print in high quality."
 		},
 		"pages": {
@@ -83,28 +81,14 @@ component {
 			boolean fidelity="true", string pages="", string paper=""){
 		dump(arguments);
 
-		variables.javaPrinter.print(argumentCollection=arguments);
+		arguments.paper = "A4";
+		arguments.pages="1,4-5";
+
+		new javaxPrinter().print(argumentCollection=arguments);
 	}
 
 	public boolean function onEndTag(struct attributes,struct caller,string generatedContent) {
 		return false;
-	}
-
-	variables.javaPrinter = new component {
-		import javax.print.DocFlavor;
-		import javax.print.attribute.standard.MediaSizeName;
-
-		public function print( string printer, string paper){
-			dump(arguments);
-			var media = getMedia(arguments.paper);
-
-		}
-
-		function getMedia( string paper ){
-			var suppported = new MediaSizeName(javacast("int",1)).getStringTable();
-			dump(supported);
-		}
-
 	}
 
 }

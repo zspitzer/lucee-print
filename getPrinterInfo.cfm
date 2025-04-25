@@ -1,4 +1,4 @@
-<h1>getPrinterList()</h1>
+<h1>getPrinterInfo()</h1>
 <p>only supports local printers</p>
 <div>
 	<a href="https://docs.lucee.org/reference/functions/getprinterlist.html">getPrinterList()</a>
@@ -22,26 +22,32 @@
 	printers = print.list();
 
 	arrayEach(printers, function(printer){
-		echo("<h2>#printer.getName()#</h2>");
+		echo('<a href="###urlEncode(printer.getName())#">#printer.getName()#</a>&nbsp;');
+	});
 
-		dump(var=printer, expand=true);
+	arrayEach(printers, function(printer){
+		echo('<h2 id="#urlEncode(printer.getName())#">#printer.getName()#</h2>');
 
-		var ac = printer.getSupportedAttributeCategories();
-		echo("<b>getSupportedAttributeCategories()</b><ul>")
-		arrayEach(ac, function(att){
-			//echo("<li>" & att.getCategory() & " " &  att.getName() & " " & att.getValue() & " " );
-			echo("<li>" & att.getName() );
-		})
-		echo("</ul>");
+		//dump(var=printer, expand=true);
 
 		var a = printer.getAttributes().toArray();
 		echo("<b>getAttributes()</b><ul>")
 		arrayEach(a, function(att){
-			echo("<li>" & att.getCategory()  & ", " &  att.getName() & " :: " & att.getValue() & " " );
+			echo("<li>" & att.getName() & " :: " & att.getValue() & " " );
 
 		})
 		echo("</ul>");
 
+
+		var ac = printer.getSupportedAttributeCategories();
+		echo("<b>getSupportedAttributeCategories()</b><ul><li>")
+		arrayEach(ac, function(att){
+			//echo("<li>" & att.getCategory() & " " &  att.getName() & " " & att.getValue() & " " );
+			echo(listlast(att.getName(),".") & " " );
+		})
+		echo("</ul>");
+
+		/*
 		var docs = printer.getSupportedDocFlavors();
 		echo("<b>getSupportedDocFlavors()</b><ul>")
 		arrayEach(docs, function(doc, idx){
@@ -57,7 +63,7 @@
 		})
 		echo("</ul></li>")
 		echo("</ul>")
-
+		*/
 
 	});
 
